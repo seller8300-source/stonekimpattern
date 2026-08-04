@@ -1,0 +1,270 @@
+<meta charset="utf-8">
+<meta name="color-scheme" content="light only">
+<meta name="supported-color-schemes" content="light">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light only">
+<title>소프트스톤 패턴 안내 · 스톤킴</title>
+
+<style>
+/* 다크모드 강제 해제 */
+html{color-scheme:light only;background:#fff}
+@media (prefers-color-scheme:dark){
+  html,body{background:#fff !important;color:var(--ink) !important;}
+}
+
+:root{
+  color-scheme:light only;
+  --sans:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Segoe UI",
+    "Malgun Gothic","맑은 고딕",Roboto,"Helvetica Neue",sans-serif;
+  --ink:#1E1A17; --body:#57504A; --mute:#948C85;
+  --line:#EBE7E4; --line2:#F5F2F0;
+  --orange:#E8641A; --orange-dk:#C24F0E; --orange-lt:#FDF4EE;
+  --green:#2F6B49; --green-bg:#EFF4F0;
+  --red:#B32718; --red-bg:#FDF4F2;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:#fff;color:var(--ink);font-family:var(--sans);
+  font-size:16px;line-height:1.78;letter-spacing:-.02em;
+  -webkit-font-smoothing:antialiased;word-break:keep-all;padding-bottom:60px}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px}
+strong{font-weight:600;color:var(--ink)}
+
+.top{background:var(--orange);color:#fff;position:sticky;top:0;z-index:50}
+.top .wrap{display:flex;justify-content:space-between;align-items:center;height:50px;
+  font-size:13.5px;font-weight:600;letter-spacing:-.03em}
+.top .r{font-size:11.5px;opacity:.75;font-weight:500}
+
+.hero{padding:44px 0 36px}
+.kicker{font-size:11.5px;font-weight:700;letter-spacing:.16em;color:var(--orange);margin-bottom:14px}
+h1{font-size:clamp(25px,6.6vw,31px);font-weight:700;line-height:1.42;letter-spacing:-.04em}
+h1 span{color:var(--orange)}
+.lede{margin-top:18px;font-size:15px;color:var(--body);line-height:1.9}
+
+section{padding-bottom:28px}
+.hd{padding:24px 0 15px;border-top:1px solid var(--line)}
+h2{font-size:20px;font-weight:700;letter-spacing:-.035em;line-height:1.42}
+.sub{font-size:13.5px;color:var(--mute);margin-top:7px;line-height:1.7}
+
+.core{border:1px solid #F2DFD1;background:var(--orange-lt);border-radius:14px;padding:20px}
+.core h3{font-size:16px;font-weight:700;letter-spacing:-.03em;margin-bottom:9px}
+.core p{font-size:14.8px;color:var(--body);line-height:1.85}
+.core p+p{margin-top:10px}
+.hl{background:linear-gradient(transparent 62%,rgba(232,100,26,.28) 62%);font-weight:600;color:var(--ink)}
+
+.demo{margin-top:14px;border:1px solid var(--line);border-radius:14px;padding:18px}
+.demo .cap{font-size:11px;font-weight:700;letter-spacing:.12em;color:var(--mute);margin-bottom:12px}
+.tiles{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}
+.tile{aspect-ratio:1/2;border-radius:5px;position:relative;overflow:hidden;border:1px solid rgba(0,0,0,.08)}
+.tile span{position:absolute;left:0;right:0;bottom:4px;text-align:center;font-size:9.5px;
+  font-weight:700;color:rgba(255,255,255,.92);text-shadow:0 1px 2px rgba(0,0,0,.4)}
+.demo .exp{margin-top:12px;font-size:14px;color:var(--body);line-height:1.8}
+
+.warn{margin-top:12px;border:1px solid #F0DCD6;background:var(--red-bg);border-left:4px solid var(--red);
+  border-radius:12px;padding:16px 18px}
+.warn h3{font-size:15px;font-weight:700;color:var(--red);margin-bottom:7px}
+.warn p{font-size:14.5px;color:var(--body);line-height:1.82}
+.warn p+p{margin-top:9px}
+
+.tabs{display:flex;gap:7px;margin-bottom:13px}
+.tabs button{flex:1;padding:12px 6px;font-family:var(--sans);font-size:14px;font-weight:700;
+  border:1px solid var(--line);border-radius:11px;background:#fff;color:var(--mute);cursor:pointer;letter-spacing:-.02em}
+.tabs button.on{background:var(--orange);border-color:var(--orange);color:#fff}
+.tabs button small{display:block;font-size:11px;font-weight:500;opacity:.75;margin-top:1px}
+
+.search{width:100%;padding:13px 15px;font-size:15px;font-family:var(--sans);
+  border:1px solid var(--line);border-radius:11px;background:#fff;color:var(--ink);margin-bottom:12px}
+.search::placeholder{color:#BCB3AC}
+.search:focus{outline:none;border-color:var(--orange);box-shadow:0 0 0 3px rgba(232,100,26,.12)}
+
+.legend{display:flex;gap:13px;flex-wrap:wrap;margin-bottom:10px;font-size:12.5px;color:var(--mute)}
+.legend span{display:flex;align-items:center;gap:6px}
+.dot{width:10px;height:10px;border-radius:3px;display:inline-block}
+
+.lnhd{font-size:12px;font-weight:800;letter-spacing:.1em;color:var(--orange-dk);
+  padding:16px 2px 9px;border-bottom:1px solid var(--line);margin-bottom:9px}
+.lnhd small{color:var(--mute);font-weight:600;letter-spacing:0;margin-left:7px}
+
+/* A라인 카드 */
+.item{border:1px solid var(--line);border-radius:13px;margin-bottom:9px;overflow:hidden}
+.item.none{border-style:dashed;background:#FCFBFA}
+.ihd{padding:14px 16px}
+.iname{font-size:16px;font-weight:700;letter-spacing:-.02em;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.iname .rg{font-size:13px;font-weight:600;color:var(--mute)}
+.tag{font-size:10.5px;font-weight:700;background:#F0EAE6;color:#8A7D73;padding:3px 8px;border-radius:5px}
+.pats{display:flex;flex-wrap:wrap;gap:6px;margin-top:11px}
+.pat{font-size:12.5px;font-weight:600;background:#FDEDE1;border-radius:7px;padding:5px 10px;color:var(--body)}
+.pat b{font-weight:800;color:var(--orange-dk);margin-left:4px}
+.pat.one{background:var(--green-bg)}
+.pat.one b{color:var(--green)}
+.nopat{margin-top:10px;font-size:13px;color:var(--mute);line-height:1.7}
+.codes{border-top:1px solid var(--line2);padding:11px 16px 13px;display:flex;flex-wrap:wrap;gap:5px}
+.code{font-size:12px;font-weight:600;background:#F7F4F2;color:var(--body);
+  padding:4px 9px;border-radius:99px;white-space:nowrap}
+.code b{color:var(--ink);font-weight:700;margin-right:5px}
+
+/* C라인 행 */
+.row{display:flex;align-items:center;gap:11px;padding:11px 13px;border:1px solid var(--line);
+  border-radius:10px;margin-bottom:6px}
+.row.solid{background:#FAFAF9}
+.row .cd{font-size:13px;font-weight:800;letter-spacing:-.01em;min-width:46px}
+.row .cl{flex:1;font-size:13.5px;color:var(--body);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row .cl.na{color:#C3BBB4}
+.chip{font-size:11.5px;font-weight:700;padding:4px 10px;border-radius:99px;white-space:nowrap;
+  background:#FDEDE1;color:var(--orange-dk)}
+.chip.one{background:var(--green-bg);color:var(--green)}
+.chip.solid{background:#EFF1F4;color:#5A6470}
+.chip.na{background:#F4F1EF;color:#9C948D}
+
+.empty{padding:24px 4px;color:var(--mute);font-size:14px;text-align:center}
+footer{margin-top:14px;padding:24px 0 0;border-top:1px solid var(--line);
+  font-size:12.5px;color:var(--mute);text-align:center;line-height:1.9}
+</style>
+
+<div class="top"><div class="wrap"><div>스톤킴 STONEKIM</div><div class="r">소프트스톤 패턴 안내</div></div></div>
+
+<header class="hero"><div class="wrap">
+  <div class="kicker">주문 전 꼭 확인</div>
+  <h1>같은 제품이라도<br><span>무늬는 여러 종류</span>입니다</h1>
+  <p class="lede">소프트스톤은 천연석 질감을 살린 자재라, 하나의 제품 코드 안에<br><strong>서로 다른 무늬(패턴)가 여러 개 들어 있습니다.</strong><br>주문 시 지정하지 않으면 여러 패턴이 섞여서 출고됩니다.</p>
+</div></header>
+
+<main class="wrap">
+
+  <section>
+    <div class="hd"><h2>먼저 이것만 이해하시면 됩니다</h2></div>
+
+    <div class="core">
+      <h3>코드는 같아도 무늬는 다릅니다</h3>
+      <p>같은 코드는 <strong>색과 질감이 동일합니다.</strong> 여기까지는 보장됩니다.</p>
+      <p>하지만 <span class="hl">돌무늬는 장마다 다를 수 있습니다.</span> 실제 천연석처럼 보이게 하려고 한 제품 안에 여러 개의 무늬 판을 만들어 두었기 때문입니다.</p>
+    </div>
+
+    <div class="demo">
+      <div class="cap">예시 · 패턴이 5개인 제품</div>
+      <div class="tiles" id="tiles"></div>
+      <p class="exp">이 제품을 <strong>10장 주문하시면</strong> 위 무늬가 <strong>섞여서 출고</strong>됩니다.<br>전부 같은 무늬로 받으시려면 <strong>주문 시 패턴을 지정</strong>하셔야 합니다.</p>
+    </div>
+
+    <div class="warn">
+      <h3>이렇게 안내해 주세요</h3>
+      <p>"이 제품은 <strong>무늬가 여러 종류</strong>라서, 그냥 주문하시면 섞여서 나갑니다.<br>한 가지 무늬로만 받으시려면 <strong>미리 지정</strong>해 주셔야 해요."</p>
+      <p>패턴 지정 시 <strong>재고 상황에 따라 납기가 달라질 수 있으므로</strong> 담당자 확인이 필요합니다.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="hd"><h2>라인별 패턴 수</h2>
+      <p class="sub">라인명, 코드, 컬러로 검색하실 수 있습니다.</p></div>
+
+    <div class="tabs">
+      <button class="on" data-t="A">A라인<small>92개 코드</small></button>
+      <button data-t="C">C라인<small>185개 코드</small></button>
+    </div>
+
+    <input class="search" id="q" type="search" placeholder="검색 (예: 트래버틴, 노출, A017, C001)" autocomplete="off">
+
+    <div class="legend">
+      <span><i class="dot" style="background:var(--green)"></i>전부 동일 — 무늬 하나</span>
+      <span><i class="dot" style="background:var(--orange)"></i>패턴 여러 개 — 섞여서 출고</span>
+    </div>
+
+    <div id="list"></div>
+    <div class="empty" id="none" hidden>검색 결과가 없습니다.</div>
+  </section>
+
+  <footer>
+    소프트스톤 패턴 안내 · 스톤킴<br>
+    패턴 지정 주문은 담당자에게 문의해 주세요 · 1866-1338
+  </footer>
+</main>
+
+<script>
+const GA = [{"line": "트래버틴", "guess": false, "range": "A005~A009", "pats": [["600×1200", 8], ["2400×600", 5], ["1200×2400", 2]], "codes": [{"c": "A005", "k": "로마 화이트"}, {"c": "A006", "k": "로마 옐로우"}, {"c": "A007", "k": "브라운 옐로우"}, {"c": "A008", "k": "레드"}, {"c": "A009", "k": "라이트 그레이"}]}, {"line": "트래버틴", "guess": false, "range": "A013~A015", "pats": [["600×1200", 5], ["2400×600", 3], ["1200×2400", 1]], "codes": [{"c": "A013", "k": "화이트"}, {"c": "A014", "k": "옐로우"}, {"c": "A015", "k": "그레이"}]}, {"line": "트래버틴", "guess": false, "range": "A069~A075", "pats": [], "codes": [{"c": "A069", "k": "레드 트래버틴"}, {"c": "A070", "k": "그레이 트래버틴"}, {"c": "A071", "k": "커피"}, {"c": "A072", "k": "화이트 트래버틴"}, {"c": "A073", "k": "목늬 커피"}, {"c": "A074", "k": "목늬 라이트옐로우"}, {"c": "A075", "k": "목늬 라이트그레이"}]}, {"line": "트래버틴", "guess": false, "range": "A076~A081", "pats": [], "codes": [{"c": "A076", "k": "보물 블랙"}, {"c": "A077", "k": "흑백 뿌리"}, {"c": "A078", "k": "카스"}, {"c": "A079", "k": "노나 딥그레이"}, {"c": "A080", "k": "노나 라이트그레이"}, {"c": "A081", "k": "노나 베이지옐로우"}]}, {"line": "트래버틴", "guess": true, "range": "A088~A092", "pats": [], "codes": [{"c": "A088", "k": "라이트 화이트"}, {"c": "A089", "k": "밀크 옐로우"}, {"c": "A090", "k": "그레이"}, {"c": "A091", "k": "라이트 브라운"}, {"c": "A092", "k": "다크 브라운"}]}, {"line": "대리석", "guess": false, "range": "A001~A004", "pats": [["600×1200", 5], ["2400×600", 5], ["1200×2400", 2]], "codes": [{"c": "A001", "k": "안디스 화이트"}, {"c": "A002", "k": "브라운 옐로우"}, {"c": "A003", "k": "다크 그레이"}, {"c": "A004", "k": "안디스 레드"}]}, {"line": "대리석", "guess": false, "range": "A010~A012", "pats": [["600×1200", 1], ["2400×600", 1], ["1200×2400", 1]], "codes": [{"c": "A010", "k": "운산 화이트"}, {"c": "A011", "k": "운산 옐로우"}, {"c": "A012", "k": "운산 그레이"}]}, {"line": "대리석", "guess": false, "range": "A021~A022", "pats": [["600×1200", 6]], "codes": [{"c": "A021", "k": "노블 디에 데코"}, {"c": "A022", "k": "카스"}]}, {"line": "대리석", "guess": false, "range": "A025~A026", "pats": [], "codes": [{"c": "A025", "k": "브라운"}, {"c": "A026", "k": "다크 그레이"}]}, {"line": "대리석", "guess": false, "range": "A030~A033", "pats": [["600×1200", 5]], "codes": [{"c": "A030", "k": "실버 그레이"}, {"c": "A031", "k": "다크 그레이"}, {"c": "A032", "k": "골든 옐로우"}, {"c": "A033", "k": "다크 브라운"}]}, {"line": "대리석", "guess": false, "range": "A034~A039", "pats": [["600×1200", 5]], "codes": [{"c": "A034", "k": "니뤄 실버그레이"}, {"c": "A035", "k": "니뤄 쿨그레이"}, {"c": "A036", "k": "니뤄 다크그레이"}, {"c": "A037", "k": "사구 브라운"}, {"c": "A038", "k": "사구 베이지"}, {"c": "A039", "k": "사구 레드"}]}, {"line": "대리석", "guess": true, "range": "A043", "pats": [["600×1200", 5]], "codes": [{"c": "A043", "k": ""}]}, {"line": "노출 콘크리트", "guess": false, "range": "A016~A018", "pats": [["600×1200", 5]], "codes": [{"c": "A016", "k": "노출콘 믹스컬러"}, {"c": "A017", "k": "웜 그레이"}, {"c": "A018", "k": "브라운"}]}, {"line": "노출 콘크리트", "guess": false, "range": "A019", "pats": [["600×1200", 6]], "codes": [{"c": "A019", "k": "6구멍 웜 그레이"}]}, {"line": "노출 콘크리트", "guess": false, "range": "A020", "pats": [["600×1200", 5], ["2400×600", 2], ["1200×2400", 1]], "codes": [{"c": "A020", "k": "만조 레드"}]}, {"line": "스톤", "guess": false, "range": "A023~A024", "pats": [["600×1200", 6]], "codes": [{"c": "A023", "k": "베이지"}, {"c": "A024", "k": "다크 그레이"}]}, {"line": "스톤", "guess": false, "range": "A027", "pats": [["3000×600", 3], ["3000×1200", 1]], "codes": [{"c": "A027", "k": "브라운"}]}, {"line": "스톤", "guess": false, "range": "A028", "pats": [["3000×600", 3], ["3000×1200", 1]], "codes": [{"c": "A028", "k": ""}]}, {"line": "스톤", "guess": false, "range": "A029", "pats": [["3000×600", 3], ["3000×1200", 1]], "codes": [{"c": "A029", "k": ""}]}, {"line": "스톤", "guess": true, "range": "A040~A041", "pats": [["600×1200", 5]], "codes": [{"c": "A040", "k": "레드"}, {"c": "A041", "k": "그레이"}]}, {"line": "스톤", "guess": true, "range": "A042", "pats": [["600×1200", 6]], "codes": [{"c": "A042", "k": ""}]}, {"line": "스톤", "guess": true, "range": "A046~A047", "pats": [["3060×1180", 2]], "codes": [{"c": "A046", "k": "브라운"}, {"c": "A047", "k": "실버 화이트"}]}, {"line": "스톤", "guess": true, "range": "A048", "pats": [["2380×300", 10], ["2380×600", 5]], "codes": [{"c": "A048", "k": ""}]}, {"line": "스톤", "guess": true, "range": "A049~A052", "pats": [["900×600", 6], ["2800×600", 4]], "codes": [{"c": "A049", "k": "로마 옐로우"}, {"c": "A050", "k": "브라운"}, {"c": "A051", "k": "그레이"}, {"c": "A052", "k": "레드"}]}, {"line": "스톤", "guess": false, "range": "A053~A054", "pats": [["900×600", 6], ["2800×600", 4]], "codes": [{"c": "A053", "k": "화이트"}, {"c": "A054", "k": "베이지"}]}, {"line": "스톤", "guess": false, "range": "A055~A059", "pats": [["3000×600", 4]], "codes": [{"c": "A055", "k": "베이지 화이트"}, {"c": "A056", "k": "베이지 옐로우"}, {"c": "A057", "k": "베이지 레드"}, {"c": "A058", "k": "레임 황"}, {"c": "A059", "k": "시멘트 그레이"}]}, {"line": "스톤", "guess": true, "range": "A082~A083", "pats": [], "codes": [{"c": "A082", "k": "레임 화이트"}, {"c": "A083", "k": "레임 옐로우"}]}, {"line": "스톤", "guess": true, "range": "A084~A087", "pats": [], "codes": [{"c": "A084", "k": "라이트 그레이"}, {"c": "A085", "k": "그레이"}, {"c": "A086", "k": "다크 그레이"}, {"c": "A087", "k": "옐로우"}]}, {"line": "스페셜(우드)", "guess": true, "range": "A044~A045", "pats": [["2950×595", 2]], "codes": [{"c": "A044", "k": "미디엄 그레이"}, {"c": "A045", "k": "라이트 그레이"}]}, {"line": "스페셜(우드)", "guess": false, "range": "A060~A063", "pats": [], "codes": [{"c": "A060", "k": "라이트 옐로우"}, {"c": "A061", "k": "옐로우"}, {"c": "A062", "k": "라이트 브라운"}, {"c": "A063", "k": "다크 브라운"}]}, {"line": "스페셜(우드)", "guess": false, "range": "A064~A066", "pats": [["1200×190", 2]], "codes": [{"c": "A064", "k": "다크 브라운"}, {"c": "A065", "k": "브라운"}, {"c": "A066", "k": "카키 옐로우"}]}, {"line": "스페셜(우드)", "guess": false, "range": "A067~A068", "pats": [["1500×190", 12]], "codes": [{"c": "A067", "k": "옐로우"}, {"c": "A068", "k": "라이트 커피"}]}];
+const GC = [{"c": "C001", "line": "트래버틴", "p": 6, "raw": "6개면", "k": "Andes Yellow", "sz": ["600x1200", "1200x2400"]}, {"c": "C002", "line": "트래버틴", "p": 2, "raw": "2개면", "k": "Cartier White", "sz": ["600x1200", "1200x2400"]}, {"c": "C003", "line": "트래버틴", "p": 2, "raw": "2개면", "k": "Pandora Yellow", "sz": ["600x1200", "1200x2400"]}, {"c": "C004", "line": "트래버틴", "p": 1, "raw": "단면", "k": "Platinum", "sz": ["600x1200", "1200x2400"]}, {"c": "C005", "line": "트래버틴", "p": 1, "raw": "단면", "k": "Danish Travertine", "sz": ["600x1200", "1200x2400"]}, {"c": "C006", "line": "트래버틴", "p": 1, "raw": "단면", "k": "Sardin Yellow", "sz": ["600x1200", "1200x2400"]}, {"c": "C007", "line": "트래버틴", "p": 1, "raw": "단면", "k": "Italian Red", "sz": ["600x1200", "1200x2900"]}, {"c": "C008", "line": "트래버틴", "p": 1, "raw": "단면", "k": "Sardin White", "sz": ["600x1200", "1200x2900"]}, {"c": "C009", "line": "트래버틴", "p": 6, "raw": "6개면", "k": "Andes Yellow", "sz": ["600x1200", "1200x2900"]}, {"c": "C010", "line": "트래버틴", "p": 1, "raw": "단면", "k": "Cloud White", "sz": ["600x1200", "1200x2900"]}, {"c": "C011", "line": "트래버틴", "p": 1, "raw": "단면", "k": "Cloud Yellow", "sz": ["600x1200", "1200x2900"]}, {"c": "C012", "line": "트래버틴", "p": 1, "raw": "단면", "k": "Cloud Grey", "sz": ["600x1200", "1200x2900"]}, {"c": "C047", "line": "대리석", "p": 1, "raw": "단면", "k": "Lightning", "sz": ["600x1200", "1200x2400"]}, {"c": "C048", "line": "대리석", "p": 1, "raw": "단면", "k": "Carrara White", "sz": ["600x1200", "1200x2400"]}, {"c": "C053", "line": "대리석", "p": 2, "raw": "2개면", "k": "Fantasy Forest", "sz": ["600x1200", "1200x3000"]}, {"c": "C054", "line": "대리석", "p": 1, "raw": "단면", "k": "Venus Grey", "sz": ["600x1200", "1200x3000"]}, {"c": "C056", "line": "대리석", "p": 1, "raw": "단면", "k": "Italian Statuario Marble", "sz": ["600x1200", "1200x3000"]}, {"c": "C057", "line": "대리석", "p": 2, "raw": "2개면", "k": "Montclair", "sz": ["600x1200", "1200x3000"]}, {"c": "C058", "line": "대리석", "p": 1, "raw": "단면", "k": "Wes", "sz": ["600x1200", "1200x3000"]}, {"c": "C059", "line": "대리석", "p": 1, "raw": "단면", "k": "Dimly Yellow", "sz": ["600x1200", "1200x3000"]}, {"c": "C060", "line": "대리석", "p": 1, "raw": "단면", "k": "Venus Grey", "sz": ["600x1200", "1200x3000"]}, {"c": "C066", "line": "대리석", "p": 1, "raw": "단면", "k": "Andassa", "sz": ["600x1200", "1200x2400"]}, {"c": "C086", "line": "대리석", "p": 1, "raw": "단면", "k": "Pana", "sz": ["600x1200", "1200x2400"]}, {"c": "C087", "line": "대리석", "p": 1, "raw": "단면", "k": "Quicksand Red", "sz": ["600x1200", "1200x2400"]}, {"c": "C088", "line": "대리석", "p": 1, "raw": "단면", "k": "Burlington", "sz": ["600x1200", "1200x2400"]}, {"c": "C106", "line": "대리석", "p": 2, "raw": "2개면", "k": "Pandora Yellow", "sz": ["600x1200", "600x1500", "1200x3000"]}, {"c": "C154", "line": "대리석", "p": 6, "raw": "6개면", "k": "", "sz": ["1200x3000", "1220x3000"]}, {"c": "C155", "line": "대리석", "p": 1, "raw": "단면", "k": "", "sz": ["1200x3000", "1220x3000"]}, {"c": "C156", "line": "대리석", "p": 1, "raw": "단면", "k": "", "sz": ["1200x3000", "1220x3000"]}, {"c": "C157", "line": "대리석", "p": 1, "raw": "단면", "k": "", "sz": ["1200x3000", "1220x3000"]}, {"c": "C158", "line": "대리석", "p": 2, "raw": "2개면", "k": "", "sz": ["1200x3000", "1220x3000"]}, {"c": "C189", "line": "대리석", "p": 1, "raw": "단면", "k": "", "sz": ["1200x2780"]}, {"c": "C190", "line": "대리석", "p": 1, "raw": "단면", "k": "", "sz": ["1200x2780"]}, {"c": "C191", "line": "대리석", "p": 1, "raw": "단면", "k": "", "sz": ["1200x2780"]}, {"c": "C192", "line": "대리석", "p": 1, "raw": "단면", "k": "", "sz": ["1200x2780"]}, {"c": "C194", "line": "대리석", "p": 1, "raw": "단면", "k": "", "sz": ["1200x2780"]}, {"c": "C195", "line": "대리석", "p": 1, "raw": "단면", "k": "", "sz": ["1200x2780"]}, {"c": "C196", "line": "대리석", "p": 1, "raw": "단면", "k": "", "sz": ["1200x2780"]}, {"c": "C197", "line": "대리석", "p": 1, "raw": "단면", "k": "", "sz": ["1200x2780"]}, {"c": "C198", "line": "대리석", "p": 1, "raw": "단면", "k": "", "sz": ["1200x2780"]}, {"c": "C199", "line": "대리석", "p": 1, "raw": "단면", "k": "", "sz": ["1200x2780"]}, {"c": "C200", "line": "대리석", "p": 1, "raw": "단면", "k": "", "sz": ["1200x2780"]}, {"c": "C201", "line": "대리석", "p": 1, "raw": "단면", "k": "", "sz": ["1200x2780"]}, {"c": "C202", "line": "대리석", "p": 1, "raw": "단면", "k": "", "sz": ["1200x2780"]}, {"c": "C203", "line": "대리석", "p": 1, "raw": "단면", "k": "", "sz": ["1200x2780"]}, {"c": "C133", "line": "노출 콘크리트", "p": 1, "raw": "단면", "k": "Grey White", "sz": ["600x1200", "1200x2400"]}, {"c": "C134", "line": "노출 콘크리트", "p": 1, "raw": "단면", "k": "Light Grey", "sz": ["600x1200", "1200x2400"]}, {"c": "C135", "line": "노출 콘크리트", "p": 1, "raw": "단면", "k": "Neutral Grey", "sz": ["600x1200", "1200x2400"]}, {"c": "C136", "line": "노출 콘크리트", "p": 1, "raw": "단면", "k": "Black Grey", "sz": ["600x1200", "1200x2400"]}, {"c": "C137", "line": "노출 콘크리트", "p": 1, "raw": "단면", "k": "Cardozo", "sz": ["600x1200", "1200x2400"]}, {"c": "C138", "line": "노출 콘크리트", "p": 1, "raw": "단면", "k": "Veil Grey", "sz": ["600x1200", "1200x2400"]}, {"c": "C139", "line": "노출 콘크리트", "p": 1, "raw": "단면", "k": "Polished Cement Yellow", "sz": ["600x1200", "1200x2400"]}, {"c": "C140", "line": "노출 콘크리트", "p": 1, "raw": "단면", "k": "Polished Cement Red", "sz": ["600x1200", "1200x2400"]}, {"c": "C141", "line": "노출 콘크리트", "p": 1, "raw": "단면", "k": "Polished Cement Khaki", "sz": ["600x1200", "1200x2400"]}, {"c": "C142", "line": "노출 콘크리트", "p": 1, "raw": "단면", "k": "Polished Cement Brown", "sz": ["600x1200", "1200x2400"]}, {"c": "C143", "line": "노출 콘크리트", "p": 1, "raw": "단면", "k": "Polished Cement Grey", "sz": ["600x1200", "1200x2400"]}, {"c": "C144", "line": "노출 콘크리트", "p": 1, "raw": "단면", "k": "Polished Cement Dark Grey", "sz": ["600x1200", "1200x2400"]}, {"c": "C145", "line": "노출 콘크리트", "p": 1, "raw": "단면", "k": "Rusty Cement Orange", "sz": ["600x1200", "1200x2400"]}, {"c": "C146", "line": "노출 콘크리트", "p": 1, "raw": "단면", "k": "Rusty Cement Yellow", "sz": ["600x1200", "1200x2400"]}, {"c": "C147", "line": "노출 콘크리트", "p": 1, "raw": "단면", "k": "Rusty Cement Brown", "sz": ["600x1200", "1200x2400"]}, {"c": "C148", "line": "노출 콘크리트", "p": 1, "raw": "단면", "k": "Rusty Cement Red", "sz": ["600x1200", "1200x2400"]}, {"c": "C149", "line": "노출 콘크리트", "p": null, "raw": "", "k": "Grey White", "sz": ["600x900", "900x1800"]}, {"c": "C150", "line": "노출 콘크리트", "p": null, "raw": "", "k": "Light Grey", "sz": ["600x900", "900x1800"]}, {"c": "C151", "line": "노출 콘크리트", "p": null, "raw": "", "k": "Light Yellow", "sz": ["600x900", "900x1800"]}, {"c": "C152", "line": "노출 콘크리트", "p": null, "raw": "", "k": "Orange", "sz": ["600x900", "900x1800"]}, {"c": "C013", "line": "스톤", "p": 0, "raw": "단색", "k": "Grey White", "sz": ["600x1200", "1200x2400"]}, {"c": "C014", "line": "스톤", "p": 0, "raw": "단색", "k": "Pure Black", "sz": ["600x1200", "1200x2400"]}, {"c": "C015", "line": "스톤", "p": 2, "raw": "2개면", "k": "Cartier White", "sz": ["600x1200", "1200x2400"]}, {"c": "C016", "line": "스톤", "p": 1, "raw": "단면", "k": "Sardin Yellow", "sz": ["600x1200", "1200x2400"]}, {"c": "C017", "line": "스톤", "p": 1, "raw": "단면", "k": "Vein Red", "sz": ["600x1200", "1200x2400"]}, {"c": "C018", "line": "스톤", "p": 1, "raw": "단면", "k": "Shale Brown", "sz": ["600x1200", "1200x2400"]}, {"c": "C019", "line": "스톤", "p": 2, "raw": "2개면", "k": "Pandora Yellow", "sz": ["600x1200", "1200x2400"]}, {"c": "C020", "line": "스톤", "p": 1, "raw": "단면", "k": "Venus Grey", "sz": ["600x1200", "1200x2400"]}, {"c": "C021", "line": "스톤", "p": 1, "raw": "단면", "k": "Venus Red", "sz": ["600x1200", "1200x2400"]}, {"c": "C022", "line": "스톤", "p": 1, "raw": "단면", "k": "Mege", "sz": ["600x1200", "1200x2400"]}, {"c": "C023", "line": "스톤", "p": 2, "raw": "2개면", "k": "Cartier White", "sz": ["600x1200", "1200x2400"]}, {"c": "C024", "line": "스톤", "p": 1, "raw": "단면", "k": "Cardozo", "sz": ["600x1200", "1200x2400"]}, {"c": "C025", "line": "스톤", "p": 0, "raw": "단색", "k": "Pure White", "sz": ["600x1200"]}, {"c": "C026", "line": "스톤", "p": 0, "raw": "단색", "k": "", "sz": []}, {"c": "C027", "line": "스톤", "p": 0, "raw": "단색", "k": "Grey White", "sz": ["600x1200"]}, {"c": "C028", "line": "스톤", "p": 0, "raw": "단색", "k": "Grey Black", "sz": ["600x1200"]}, {"c": "C029", "line": "스톤", "p": 1, "raw": "단면", "k": "Grey White", "sz": ["600x1200", "1200x2400"]}, {"c": "C030", "line": "스톤", "p": 1, "raw": "단면", "k": "Grey Yellow", "sz": ["600x1200", "1200x2400"]}, {"c": "C031", "line": "스톤", "p": 1, "raw": "단면", "k": "Grey White", "sz": ["600x1200", "600x1500", "1200x3000"]}, {"c": "C032", "line": "스톤", "p": 1, "raw": "단면", "k": "Dimly Yellow", "sz": ["600x1200", "600x1500", "1200x3000"]}, {"c": "C033", "line": "스톤", "p": 1, "raw": "단면", "k": "Mege", "sz": ["600x1200", "600x1500", "1200x3000"]}, {"c": "C034", "line": "스톤", "p": 1, "raw": "단면", "k": "Andi", "sz": ["600x1200", "600x1500", "1200x3000"]}, {"c": "C035", "line": "스톤", "p": 1, "raw": "단면", "k": "Cardozo", "sz": ["600x1200", "600x1500", "1200x3000"]}, {"c": "C036", "line": "스톤", "p": 6, "raw": "6개면", "k": "Andes Yellow", "sz": ["600x1200", "600x1500", "1200x3000"]}, {"c": "C037", "line": "스톤", "p": 0, "raw": "단색", "k": "Grey White", "sz": ["600x1200", "600x1500", "1200x3000"]}, {"c": "C038", "line": "스톤", "p": 1, "raw": "단면", "k": "Sava Grey", "sz": ["600x1200", "600x1500", "1200x3000"]}, {"c": "C039", "line": "스톤", "p": 1, "raw": "단면", "k": "Andi", "sz": ["600x1200", "600x1500", "1200x3000"]}, {"c": "C040", "line": "스톤", "p": 2, "raw": "2개면", "k": "Montclair", "sz": ["600x1200", "600x1500", "1200x3000"]}, {"c": "C041", "line": "스톤", "p": 2, "raw": "2개면", "k": "Fantasy Rose", "sz": ["600x1200", "600x1500", "1200x3000"]}, {"c": "C042", "line": "스톤", "p": 1, "raw": "단면", "k": "Esseth", "sz": ["600x1200", "600x1500", "1200x3000"]}, {"c": "C043", "line": "스톤", "p": null, "raw": "", "k": "", "sz": []}, {"c": "C044", "line": "스톤", "p": 1, "raw": "단면", "k": "Nile Warm Grey", "sz": ["600x1200", "1200x2400"]}, {"c": "C045", "line": "스톤", "p": 1, "raw": "단면", "k": "Mega", "sz": ["600x1200", "1200x2400"]}, {"c": "C046", "line": "스톤", "p": 1, "raw": "단면", "k": "Nile Deep Grey", "sz": ["600x1200", "1200x2400"]}, {"c": "C049", "line": "스톤", "p": 0, "raw": "단색", "k": "Grey White", "sz": ["600x1200", "1200x3000"]}, {"c": "C050", "line": "스톤", "p": 1, "raw": "단면", "k": "Lime Yellow", "sz": ["600x1200", "1200x3000"]}, {"c": "C051", "line": "스톤", "p": 1, "raw": "단면", "k": "Gold Seasame", "sz": ["600x1200", "1200x3000"]}, {"c": "C052", "line": "스톤", "p": 1, "raw": "단면", "k": "White Sesame", "sz": ["600x1200", "1200x3000"]}, {"c": "C055", "line": "스톤", "p": 0, "raw": "단색", "k": "Grey White", "sz": ["600x1200", "1200x3000"]}, {"c": "C061", "line": "스톤", "p": 1, "raw": "단면", "k": "Red Sesame", "sz": ["600x1200", "1200x2400"]}, {"c": "C062", "line": "스톤", "p": 1, "raw": "단면", "k": "Grey Sesame", "sz": ["600x1200", "1200x2400"]}, {"c": "C063", "line": "스톤", "p": 1, "raw": "단면", "k": "Grey", "sz": ["600x1200", "1200x2400"]}, {"c": "C064", "line": "스톤", "p": 1, "raw": "단면", "k": "Gold", "sz": ["600x1200", "1200x2400"]}, {"c": "C065", "line": "스톤", "p": 1, "raw": "단면", "k": "Cardozo", "sz": ["600x1200", "1200x2400"]}, {"c": "C077", "line": "스톤", "p": 0, "raw": "단색", "k": "Grey White", "sz": ["600x1200", "600x1500", "1200x3000"]}, {"c": "C078", "line": "스톤", "p": 6, "raw": "6개면", "k": "Andes Yellow", "sz": ["600x1200", "600x1500", "1200x3000"]}, {"c": "C079", "line": "스톤", "p": 0, "raw": "단색", "k": "Light Grey", "sz": ["600x1200", "600x1500", "1200x3000"]}, {"c": "C080", "line": "스톤", "p": 6, "raw": "6개면", "k": "Andes Red", "sz": ["600x1200", "600x1500", "1200x3000"]}, {"c": "C081", "line": "스톤", "p": 1, "raw": "단면", "k": "Golden Sesame", "sz": ["600x1200", "600x1500", "1200x3000"]}, {"c": "C082", "line": "스톤", "p": 1, "raw": "단면", "k": "Sadin White", "sz": ["600x1200", "600x1500", "1200x3000"]}, {"c": "C083", "line": "스톤", "p": 2, "raw": "2개면", "k": "Cartier White", "sz": ["600x1200", "1200x2400"]}, {"c": "C084", "line": "스톤", "p": 1, "raw": "단면", "k": "Latin Light Yellow", "sz": ["600x1200", "1200x2400"]}, {"c": "C085", "line": "스톤", "p": 0, "raw": "단색", "k": "Light Grey", "sz": ["600x1200", "1200x2400"]}, {"c": "C089", "line": "스톤", "p": 0, "raw": "단색", "k": "Grey White", "sz": ["600x1200", "600x1500", "1200x3000"]}, {"c": "C090", "line": "스톤", "p": 6, "raw": "6개면", "k": "Andes Yellow", "sz": ["600x1200", "600x1500", "1200x3000"]}, {"c": "C091", "line": "스톤", "p": 1, "raw": "단면", "k": "Golden Sesame", "sz": ["600x1200", "600x1500", "1200x3000"]}, {"c": "C092", "line": "스톤", "p": 0, "raw": "단색", "k": "Light Red", "sz": ["600x1200", "600x1500", "1200x3000"]}, {"c": "C093", "line": "스톤", "p": 2, "raw": "2개면", "k": "Quiet Stone", "sz": ["600x1200", "600x1500", "1200x3000"]}, {"c": "C094", "line": "스톤", "p": 1, "raw": "단면", "k": "Petra Grey", "sz": ["600x1200", "600x1500", "1200x3000"]}, {"c": "C095", "line": "스톤", "p": 0, "raw": "단색", "k": "Grey White", "sz": ["600x1200", "600x1500", "1200x3000"]}, {"c": "C096", "line": "스톤", "p": 1, "raw": "단면", "k": "Petra Grey", "sz": ["600x1200", "600x1500", "1200x3000"]}, {"c": "C097", "line": "스톤", "p": 1, "raw": "단면", "k": "Sadin White", "sz": ["600x1200", "600x1500", "1200x3000"]}, {"c": "C098", "line": "스톤", "p": 6, "raw": "6개면", "k": "Andes Yellow", "sz": ["600x1200", "600x1500", "1200x3000"]}, {"c": "C099", "line": "스톤", "p": 6, "raw": "6개면", "k": "Andes Red", "sz": ["600x1200", "600x1500", "1200x3000"]}, {"c": "C100", "line": "스톤", "p": 1, "raw": "단면", "k": "Golden Sesame", "sz": ["600x1200", "600x1500", "1200x3000"]}, {"c": "C101", "line": "스톤", "p": 0, "raw": "단색", "k": "Grey White", "sz": ["600x1200", "600x1500", "1200x3000"]}, {"c": "C102", "line": "스톤", "p": 0, "raw": "단색", "k": "Light Grey", "sz": ["600x1200", "600x1500", "1200x3000"]}, {"c": "C103", "line": "스톤", "p": 6, "raw": "6개면", "k": "Andes Yellow", "sz": ["600x1200", "600x1500", "1200x3000"]}, {"c": "C104", "line": "스톤", "p": 1, "raw": "단면", "k": "Golden Sesame", "sz": ["600x1200", "600x1500", "1200x3000"]}, {"c": "C105", "line": "스톤", "p": 6, "raw": "6개면", "k": "Andes Red", "sz": ["600x1200", "600x1500", "1200x3000"]}, {"c": "C107", "line": "스톤", "p": 0, "raw": "단색", "k": "Grey White", "sz": ["600x1200", "600x1500", "1200x3000"]}, {"c": "C108", "line": "스톤", "p": 0, "raw": "단색", "k": "Dark Grey", "sz": ["600x1200", "600x1500", "1200x3000"]}, {"c": "C109", "line": "스톤", "p": 1, "raw": "단면", "k": "Latin Light Yellow", "sz": ["600x1200", "600x1500", "1200x3000"]}, {"c": "C110", "line": "스톤", "p": 1, "raw": "단면", "k": "Burlington", "sz": ["600x1200", "600x1500", "1200x3000"]}, {"c": "C111", "line": "스톤", "p": 1, "raw": "단면", "k": "Crystal Blue", "sz": ["600x1200", "600x1500", "1200x3000"]}, {"c": "C112", "line": "스톤", "p": 1, "raw": "단면", "k": "Crystal Yellow", "sz": ["600x1200", "600x1500", "1200x3000"]}, {"c": "C113", "line": "스톤", "p": 0, "raw": "단색", "k": "Grey White", "sz": ["600x1200", "600x1500", "1200x3000"]}, {"c": "C114", "line": "스톤", "p": 1, "raw": "단면", "k": "Lime Yellow", "sz": ["600x1200", "600x1500", "1200x3000"]}, {"c": "C115", "line": "스톤", "p": 1, "raw": "단면", "k": "Quicksand Red", "sz": ["600x1200", "600x1500", "1200x3000"]}, {"c": "C116", "line": "스톤", "p": 1, "raw": "단면", "k": "Nile Deep Blue", "sz": ["600x1200", "600x1500", "1200x3000"]}, {"c": "C117", "line": "스톤", "p": 2, "raw": "2개면", "k": "Pato", "sz": ["600x1200", "600x1500", "1200x3000"]}, {"c": "C118", "line": "스톤", "p": 1, "raw": "단면", "k": "Dimly Yellow", "sz": ["600x1200", "600x1500", "1200x3000"]}, {"c": "C119", "line": "스톤", "p": 0, "raw": "단색", "k": "Grey White", "sz": ["599x2950", "1199x2950"]}, {"c": "C120", "line": "스톤", "p": 0, "raw": "단색", "k": "Light Grey", "sz": ["599x2950", "1199x2950"]}, {"c": "C121", "line": "스톤", "p": 0, "raw": "단색", "k": "Khaki", "sz": ["599x2950", "1199x2950"]}, {"c": "C122", "line": "스톤", "p": 1, "raw": "단면", "k": "Mege", "sz": ["599x2950", "1199x2950"]}, {"c": "C123", "line": "스톤", "p": 1, "raw": "단면", "k": "Lime Yellow", "sz": ["599x2950", "1199x2950"]}, {"c": "C124", "line": "스톤", "p": 1, "raw": "단면", "k": "Milan Light Grey", "sz": ["599x2950", "1199x2950"]}, {"c": "C125", "line": "스톤", "p": 0, "raw": "단색", "k": "", "sz": ["1200x2400"]}, {"c": "C126", "line": "스톤", "p": 0, "raw": "단색", "k": "", "sz": ["1200x2400"]}, {"c": "C127", "line": "스톤", "p": 1, "raw": "단면", "k": "", "sz": ["1200x2400"]}, {"c": "C128", "line": "스톤", "p": 1, "raw": "단면", "k": "", "sz": ["1200x2400"]}, {"c": "C129", "line": "스톤", "p": 0, "raw": "단색", "k": "", "sz": ["1200x3000"]}, {"c": "C130", "line": "스톤", "p": 0, "raw": "닥색", "k": "", "sz": ["1200x3000"]}, {"c": "C131", "line": "스톤", "p": 1, "raw": "단면", "k": "", "sz": ["1200x3000"]}, {"c": "C132", "line": "스톤", "p": 1, "raw": "단면", "k": "", "sz": ["1200x3000"]}, {"c": "C153", "line": "스톤", "p": 0, "raw": "단색", "k": "(유광) Grey White", "sz": ["1200x3000", "1220x3000"]}, {"c": "C179", "line": "스페셜(우드)", "p": 1, "raw": "단면", "k": "Sandal", "sz": ["300x1200", "600x1200", "1200x2400"]}, {"c": "C180", "line": "스페셜(우드)", "p": 1, "raw": "단면", "k": "Sweetgum", "sz": ["300x1200", "600x1200", "1200x2400"]}, {"c": "C181", "line": "스페셜(우드)", "p": 1, "raw": "단면", "k": "Memphis", "sz": ["300x1200", "600x1200", "1200x2400"]}, {"c": "C182", "line": "스페셜(우드)", "p": 1, "raw": "단면", "k": "Crab-apple", "sz": ["300x1200", "600x1200", "1200x2400"]}, {"c": "C183", "line": "스페셜(우드)", "p": 1, "raw": "단면", "k": "Walnut", "sz": ["300x1200", "600x1200", "1200x2400"]}, {"c": "C184", "line": "스페셜(우드)", "p": 1, "raw": "단면", "k": "Malaga", "sz": ["300x1200", "600x1200", "1200x2400"]}, {"c": "C185", "line": "스페셜(우드)", "p": 1, "raw": "단면", "k": "Warm Sunshine", "sz": ["1200*2770"]}, {"c": "C186", "line": "스페셜(우드)", "p": 1, "raw": "단면", "k": "Glacier Cyan", "sz": ["1200*2770"]}, {"c": "C187", "line": "스페셜(우드)", "p": 1, "raw": "단면", "k": "Brown", "sz": ["1200*2770"]}, {"c": "C188", "line": "스페셜(우드)", "p": 1, "raw": "단면", "k": "Vintage Ink Green", "sz": ["1200*2770"]}, {"c": "C167", "line": "스페셜(헤링본)", "p": 0, "raw": "단색", "k": "Grey White", "sz": ["600*1200", "600*1500", "1200*3000"]}, {"c": "C168", "line": "스페셜(헤링본)", "p": 0, "raw": "단색", "k": "Light Grey", "sz": ["600*1200", "600*1500", "1200*3000"]}, {"c": "C169", "line": "스페셜(헤링본)", "p": 0, "raw": "단색", "k": "Khaki", "sz": ["600*1200", "600*1500", "1200*3000"]}, {"c": "C170", "line": "스페셜(헤링본)", "p": 0, "raw": "단색", "k": "Brown", "sz": ["600*1200", "600*1500", "1200*3000"]}, {"c": "C171", "line": "스페셜(헤링본)", "p": 0, "raw": "단색", "k": "Grey White", "sz": ["600x1500"]}, {"c": "C172", "line": "스페셜(헤링본)", "p": 0, "raw": "단색", "k": "Khaki", "sz": ["600x1500"]}, {"c": "C173", "line": "스페셜(헤링본)", "p": 0, "raw": "단색", "k": "Light Grey", "sz": ["600x1500"]}, {"c": "C174", "line": "스페셜(헤링본)", "p": 0, "raw": "단색", "k": "Brown", "sz": ["600x1500"]}, {"c": "C175", "line": "스페셜(헤링본)", "p": 0, "raw": "단색", "k": "Grey White", "sz": ["1200x3000"]}, {"c": "C176", "line": "스페셜(헤링본)", "p": 0, "raw": "단색", "k": "Yellow", "sz": ["1200x3000"]}, {"c": "C177", "line": "스페셜(헤링본)", "p": 0, "raw": "단색", "k": "Neutral Grey", "sz": ["1200x3000"]}, {"c": "C178", "line": "스페셜(헤링본)", "p": 0, "raw": "단색", "k": "Brown", "sz": ["1200x3000"]}, {"c": "C193", "line": "미분류", "p": 1, "raw": "단면", "k": "", "sz": ["1200x2780"]}];
+
+const tilesEl=document.getElementById('tiles');
+[3,17,41,68,91].forEach((sd,i)=>{
+  const d=document.createElement('div'); d.className='tile';
+  const c=document.createElement('canvas'); c.width=90; c.height=180;
+  const x=c.getContext('2d'); let s=sd;
+  const rnd=()=>(s=(s*9301+49297)%233280)/233280;
+  x.fillStyle='#DFD3C2'; x.fillRect(0,0,90,180);
+  for(let k=0;k<220;k++){
+    const y=rnd()*180,w=12+rnd()*70,h=.6+rnd()*2.4;
+    x.fillStyle='rgba('+(150+rnd()*50|0)+','+(128+rnd()*44|0)+','+(100+rnd()*40|0)+','+(.10+rnd()*.28).toFixed(2)+')';
+    x.fillRect(rnd()*90-w/2,y,w,h);
+  }
+  for(let k=0;k<26;k++){x.fillStyle='rgba(120,102,80,.18)';
+    x.beginPath(); x.ellipse(rnd()*90,rnd()*180,1+rnd()*4,.8+rnd()*1.6,0,0,7); x.fill();}
+  c.style.width='100%'; c.style.height='100%'; c.style.display='block';
+  d.appendChild(c);
+  const sp=document.createElement('span'); sp.textContent='패턴 '+(i+1); d.appendChild(sp);
+  tilesEl.appendChild(d);
+});
+
+let TAB='A';
+const listEl=document.getElementById('list'), noneEl=document.getElementById('none');
+
+function renderA(items){
+  let html='', cur='';
+  items.forEach(g=>{
+    if(g.line!==cur){
+      cur=g.line;
+      const n=items.filter(x=>x.line===cur).reduce((a,b)=>a+b.codes.length,0);
+      html+='<div class="lnhd">'+cur+'<small>'+n+'개 코드</small></div>';
+    }
+    const has=g.pats.length>0;
+    const pats=has
+      ? '<div class="pats">'+g.pats.map(([sz,n])=>'<span class="pat '+(n===1?'one':'')+'">'+sz+'<b>패턴 '+n+'개</b></span>').join('')+'</div>'
+      : '<div class="nopat">패턴 수 미확인 — 주문 전 담당자 확인이 필요합니다.</div>';
+    const codes='<div class="codes">'+g.codes.map(c=>'<span class="code"><b>'+c.c+'</b>'+c.k+'</span>').join('')+'</div>';
+    html+='<div class="item'+(has?'':' none')+'"><div class="ihd"><div class="iname">'+g.line+
+      '<span class="rg">'+g.range+'</span>'+(g.guess?'<span class="tag">라인 확인 필요</span>':'')+'</div>'+
+      pats+'</div>'+codes+'</div>';
+  });
+  return html;
+}
+
+function renderC(items){
+  let html='', cur='';
+  items.forEach(x=>{
+    if(x.line!==cur){
+      cur=x.line;
+      html+='<div class="lnhd">'+cur+'<small>'+items.filter(y=>y.line===cur).length+'개 코드</small></div>';
+    }
+    let cls='', txt='';
+    if(x.p===null){ cls='na'; txt='미확인'; }
+    else if(x.p<=1){ cls='one'; txt='전부 동일'; }
+    else { txt='패턴 '+x.p+'개'; }
+    html+='<div class="row"><span class="cd">'+x.c+'</span>'+
+      '<span class="cl'+(x.k?'':' na')+'">'+(x.k||'—')+'</span>'+
+      '<span class="chip '+cls+'">'+txt+'</span></div>';
+  });
+  return html;
+}
+
+function draw(v){
+  v=(v||'').trim().toLowerCase();
+  let items, html;
+  if(TAB==='A'){
+    items = v ? GA.filter(g=>(g.line+g.range+g.codes.map(c=>c.c+c.k).join('')).toLowerCase().includes(v)) : GA;
+    html = renderA(items);
+  } else {
+    items = v ? GC.filter(x=>(x.line+x.c+x.k).toLowerCase().includes(v)) : GC;
+    html = renderC(items);
+  }
+  listEl.innerHTML=html;
+  noneEl.hidden=items.length>0;
+}
+draw('');
+
+document.getElementById('q').addEventListener('input',e=>draw(e.target.value));
+document.querySelectorAll('.tabs button').forEach(b=>{
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on'); TAB=b.dataset.t;
+    draw(document.getElementById('q').value);
+  });
+});
+</script>
