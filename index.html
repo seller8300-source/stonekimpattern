@@ -77,6 +77,14 @@ h2{font-size:20px;font-weight:700;letter-spacing:-.035em;line-height:1.42}
 .search::placeholder{color:#BCB3AC}
 .search:focus{outline:none;border-color:var(--orange);box-shadow:0 0 0 3px rgba(232,100,26,.12)}
 
+.filters{display:flex;gap:6px;margin-bottom:11px;flex-wrap:wrap}
+.filters button{font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:-.02em;
+  padding:8px 13px;border-radius:99px;border:1px solid var(--line);background:#fff;
+  color:var(--body);cursor:pointer}
+.filters button.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.filters button.on.g{background:var(--green);border-color:var(--green)}
+.filters button.on.o{background:var(--orange);border-color:var(--orange)}
+.filters button .n{opacity:.6;margin-left:5px;font-weight:600}
 .legend{display:flex;gap:13px;flex-wrap:wrap;margin-bottom:10px;font-size:12.5px;color:var(--mute)}
 .legend span{display:flex;align-items:center;gap:6px}
 .dot{width:10px;height:10px;border-radius:3px;display:inline-block}
@@ -164,6 +172,11 @@ footer{margin-top:14px;padding:24px 0 0;border-top:1px solid var(--line);
 
     <input class="search" id="q" type="search" placeholder="검색 (예: 트래버틴, 노출, A017, C001)" autocomplete="off">
 
+    <div class="filters" id="filters">
+      <button class="on" data-f="all">전체<span class="n" id="n-all"></span></button>
+      <button class="g" data-f="one">전부 동일<span class="n" id="n-one"></span></button>
+      <button class="o" data-f="multi">패턴 여러 개<span class="n" id="n-multi"></span></button>
+    </div>
     <div class="legend">
       <span><i class="dot" style="background:var(--green)"></i>전부 동일 — 무늬 하나</span>
       <span><i class="dot" style="background:var(--orange)"></i>패턴 여러 개 — 섞여서 출고</span>
@@ -203,8 +216,28 @@ const tilesEl=document.getElementById('tiles');
   tilesEl.appendChild(d);
 });
 
-let TAB='A';
+let TAB='A', FILTER='all';
 const listEl=document.getElementById('list'), noneEl=document.getElementById('none');
+
+/* 그룹/코드가 '전부 동일'인지 판정 */
+const aOne = g => g.pats.length>0 && g.pats.every(p=>p[1]<=1);
+const aMulti = g => g.pats.some(p=>p[1]>1);
+const cOne = x => x.p!==null && x.p<=1;
+const cMulti = x => x.p!==null && x.p>1;
+
+function applyFilter(items){
+  if(FILTER==='all') return items;
+  if(TAB==='A') return items.filter(FILTER==='one'?aOne:aMulti);
+  return items.filter(FILTER==='one'?cOne:cMulti);
+}
+function counts(){
+  if(TAB==='A'){
+    return [GA.reduce((a,b)=>a+b.codes.length,0),
+            GA.filter(aOne).reduce((a,b)=>a+b.codes.length,0),
+            GA.filter(aMulti).reduce((a,b)=>a+b.codes.length,0)];
+  }
+  return [GC.length, GC.filter(cOne).length, GC.filter(cMulti).length];
+}
 
 function renderA(items){
   let html='', cur='';
@@ -249,13 +282,19 @@ function draw(v){
   let items, html;
   if(TAB==='A'){
     items = v ? GA.filter(g=>(g.line+g.range+g.codes.map(c=>c.c+c.k).join('')).toLowerCase().includes(v)) : GA;
+    items = applyFilter(items);
     html = renderA(items);
   } else {
     items = v ? GC.filter(x=>(x.line+x.c+x.k).toLowerCase().includes(v)) : GC;
+    items = applyFilter(items);
     html = renderC(items);
   }
   listEl.innerHTML=html;
   noneEl.hidden=items.length>0;
+  const [a,o,m]=counts();
+  document.getElementById('n-all').textContent=a;
+  document.getElementById('n-one').textContent=o;
+  document.getElementById('n-multi').textContent=m;
 }
 draw('');
 
@@ -264,6 +303,13 @@ document.querySelectorAll('.tabs button').forEach(b=>{
   b.addEventListener('click',()=>{
     document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('on'));
     b.classList.add('on'); TAB=b.dataset.t;
+    draw(document.getElementById('q').value);
+  });
+});
+document.querySelectorAll('#filters button').forEach(b=>{
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('#filters button').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on'); FILTER=b.dataset.f;
     draw(document.getElementById('q').value);
   });
 });
